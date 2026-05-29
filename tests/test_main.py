@@ -63,3 +63,14 @@ async def test_long_query_rejected(app_with_mock_llm):
     async with AsyncClient(transport=ASGITransport(app=app_with_mock_llm), base_url="http://test") as client:
         resp = await client.post("/v1/chat", json={"query": "x" * 501})
     assert resp.status_code == 400
+
+@pytest.mark.asyncio
+async def test_chat_with_history(app_with_mock_llm):
+    history = [
+        {"role": "user", "content": "what is Artifactory?"},
+        {"role": "assistant", "content": "It is a repository manager."},
+    ]
+    async with AsyncClient(transport=ASGITransport(app=app_with_mock_llm), base_url="http://test") as client:
+        resp = await client.post("/v1/chat", json={"query": "how do I configure it?", "history": history})
+    assert resp.status_code == 200
+    assert "data:" in resp.text

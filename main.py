@@ -41,13 +41,14 @@ def _get_runner():
 
 class ChatRequest(BaseModel):
     query: str
+    history: list[dict] | None = None
 
 
-def _event_stream(query: str):
+def _event_stream(query: str, history: list[dict] | None = None):
     searcher = _get_searcher()
     runner = _get_runner()
     chunks = searcher.search(query)
-    prompt = build_prompt(query, chunks)
+    prompt = build_prompt(query, chunks, history=history)
     for token in runner.stream(prompt):
         yield f"data: {json.dumps(token)}\n\n"
     yield "data: [DONE]\n\n"
@@ -61,7 +62,7 @@ def chat(req: ChatRequest):
         raise HTTPException(status_code=400, detail="Query cannot be empty")
     if len(req.query) > 500:
         raise HTTPException(status_code=400, detail="Query too long, keep under 500 characters")
-    return StreamingResponse(_event_stream(req.query), media_type="text/event-stream")
+    return StreamingResponse(_event_stream(req.query, req.history), media_type="text/event-stream")
 
 
 @app.get("/health")
