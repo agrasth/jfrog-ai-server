@@ -1,10 +1,10 @@
 from typing import Generator
 from llama_cpp import Llama
 
-_N_CTX = 4096
+_N_CTX = 8192
 _MAX_TOKENS = 512
 _TEMPERATURE = 0.1
-_STOP = ["Question:", "\n\n\n", "Documentation:"]
+_STOP = ["Question:", "\n\n\n", "Documentation:", "\n#", " #"]
 
 
 class LlamaRunner:
