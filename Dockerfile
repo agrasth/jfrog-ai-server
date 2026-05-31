@@ -8,11 +8,16 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY *.py .
+COPY start.sh .
+RUN chmod +x start.sh
 
 ENV INDEX_PATH=/data/faiss.index
 ENV CHUNKS_PATH=/data/chunks.json
 ENV MODEL_PATH=/models/llama3-8b-q4.gguf
+ENV ARTIFACTORY_URL=https://ecosysjfrog.jfrog.io/artifactory
 
 EXPOSE 8080
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+# start.sh downloads artifacts from Artifactory if ARTIFACTORY_TOKEN is set,
+# then starts uvicorn
+CMD ["./start.sh"]
