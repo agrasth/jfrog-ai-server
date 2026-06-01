@@ -7,7 +7,7 @@ _OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 _OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3:8b")
 _MAX_TOKENS = 512
 _TEMPERATURE = 0.1
-_STOP = ["Question:", "\n\n\n", "Documentation:", "\n#", "Note that you must", "Also, you can check", "Also, you should"]
+_STOP = ["Question:", "\n\n\n", "Documentation:", "\n#", "I don't have", "I do not have", "Note that you must", "Also, you can check"]
 
 # When running locally with a GGUF file, use llama-cpp-python instead.
 # Set USE_LLAMA_CPP=1 and MODEL_PATH to enable.
