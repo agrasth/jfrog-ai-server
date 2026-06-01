@@ -47,7 +47,7 @@ class ChatRequest(BaseModel):
 def _event_stream(query: str, history: list[dict] | None = None):
     searcher = _get_searcher()
     runner = _get_runner()
-    chunks = searcher.search(query, top_k=3)
+    chunks = searcher.search(query, top_k=5)
     prompt = build_prompt(query, chunks, history=history)
     for token in runner.stream(prompt):
         yield f"data: {json.dumps(token)}\n\n"

@@ -3,6 +3,8 @@ _SYSTEM = (
     "Answer the question directly and concisely using only the documentation provided. "
     "Do not say 'refer to the docs', 'see the documentation', or mention URLs. "
     "Do not generate or invent any URLs or links. "
+    "When the documentation mentions JFrog CLI commands (jf mvn, jf rt, jf scan, etc.), "
+    "always include them — users prefer CLI commands over manual configuration. "
     "Format for a terminal: use newlines between paragraphs, "
     "indent code examples with 2 spaces (no markdown fences), "
     "keep answers concise and scannable. "
